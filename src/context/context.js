@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-
 const ProductContext = React.createContext();
+
 class ProductProvider extends Component {
 
     constructor(props) {
@@ -9,7 +9,7 @@ class ProductProvider extends Component {
         this.state = {
             sidebarOpen: false,
             cartOpen: false,
-            cartItems:0,
+            cartItems:10,
         }
     }
 

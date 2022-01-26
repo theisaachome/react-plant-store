@@ -10,10 +10,12 @@ import Products from "./pages/Products";
 import SingleProductPage from "./pages/SingleProductPage";
 import CartPage from "./pages/CartPage";
 import DefaultPage from "./pages/DefaultPage";
+import Navbar from "./components/Navbar";
 class App extends Component {
   render() {
     return(
        <>
+       <Navbar/>
        <Switch>
          <Route path="/" exact  component={Home} />
          <Route path="/about" exact  component={AboutPage} />

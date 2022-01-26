@@ -2,7 +2,9 @@ import React from 'react';
 import { ProductConsumer } from "../context";
 const HomePage = () => {
   return (<ProductConsumer>
-    {value=><h1>{value}</h1>}
+    {value=>{
+      return <h2>Home Page</h2>
+    }}
   </ProductConsumer>);
 };
 
