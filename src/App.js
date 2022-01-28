@@ -11,11 +11,15 @@ import SingleProductPage from "./pages/SingleProductPage";
 import CartPage from "./pages/CartPage";
 import DefaultPage from "./pages/DefaultPage";
 import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import Sidecart from "./components/Sidecart";
 class App extends Component {
   render() {
     return(
        <>
        <Navbar/>
+       <Sidebar/>
+       <Sidecart />
        <Switch>
          <Route path="/" exact  component={Home} />
          <Route path="/about" exact  component={AboutPage} />
