@@ -6,12 +6,12 @@ const Sidecart = () => {
   return <ProductConsumer>
       {
           value=>{
-              const {cartOpen,closeCart,cart,cartItems}=value;
+              const {cartOpen,closeCart,cart}=value;
               return <CartWrapper 
               show={cartOpen}
               onClick={closeCart}>
                   <p>CartItem</p>
-                  {cartItems}
+                  {cart}
               </CartWrapper>
           }
       }

@@ -13,6 +13,7 @@ import DefaultPage from "./pages/DefaultPage";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Sidecart from "./components/Sidecart";
+import Footer from "./components/Footer";
 class App extends Component {
   render() {
     return(
@@ -29,6 +30,7 @@ class App extends Component {
          <Route path="/cart" exact  component={CartPage} />
          <Route path="*" exact  component={DefaultPage} />
        </Switch>
+       <Footer/>
        </>
       );
   }
