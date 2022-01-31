@@ -14,8 +14,8 @@ const Navbar = () => {
             <div className="nav__center">
               <FaBars className="nav__icon" onClick={handleSidebar} />
               <img src={logo} alt="tech store logo" />
-              <div className="nav__cart">
-                <FaCartPlus className="nav__icon" onClick={handleCart} />
+              <div className="nav__cart" onClick={handleCart}>
+                <FaCartPlus className="nav__icon"  />
                 <div className="cart__items">{cartItems}</div>
               </div>
             </div>
@@ -50,6 +50,7 @@ const NavWrapper = styled.nav`
   }
   .nav__cart{
       position: relative;
+      cursor: pointer;
   }
   .cart__items{
       position: absolute;

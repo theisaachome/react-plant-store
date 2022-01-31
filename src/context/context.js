@@ -15,15 +15,15 @@ class ProductProvider extends Component {
             links: linkData,
             socialIcons: socialData,
             cart: [],
-            cartItems: 10,
+            cartItems: 0,
             cartSubTotal: 0,
-            cartText: 0,
+            cartTax: 0,
             cartTotal: 0,
             storeProducts: [],
             filteredProducts: [],
             featuredProducts: [],
             singleProduct: {},
-            loading: false,
+            loading: true,
 
         }
     }
@@ -50,34 +50,112 @@ class ProductProvider extends Component {
             cart: this.getStorageCart(),
             singleProduct: this.getStorageProduct(),
             loading: false,
+        },()=>{
+            this.addTotals();
         });
     }
     getStorageCart = () => {
-        return [];
+        let cart;
+        if(localStorage.getItem('cart')){
+            cart=JSON.parse(localStorage.getItem('cart'));
+        }else{
+            cart=[];
+        }
+        return cart;
     }
     getStorageProduct = () => {
-        return [];
+        return localStorage.getItem('singleProduct')? JSON.parse(localStorage.getItem('singleProduct')):{};
     }
     getTotals = () => {
-
+        let subTotal = 0;
+        let cartItems = 0;
+        this.state.cart.forEach(item=>{
+            subTotal +=item.total;
+            cartItems += item.count;
+        });
+        subTotal=parseFloat(subTotal.toFixed(2));
+        let tax = subTotal * 0.2;
+        tax = parseFloat(tax.toFixed(2));
+        let total = subTotal + tax;
+        total = parseFloat(total.toFixed(2));
+        return {
+            cartItems,
+            subTotal,
+            tax,
+            total,
+            
+        }
     }
 
-    addTotal = () => {
-
+    addTotals = () => {
+        const totals = this.getTotals();
+        this.setState({
+            cartItems:totals.cartItems,
+            cartSubTotal:totals.subTotal,
+            cartTax:totals.tax,
+            cartTotal:totals.total,
+        })
     }
     syncStorage = () => {
+        localStorage.setItem('cart',JSON.stringify(this.state.cart));
 
     }
 
     addToCart = (id) => {
-        console.log(`add to cart ${id}`);
+        console.log(`add Product to cart ${id}`);
+        let tempCart = [...this.state.cart];
+        let tempProducts = [...this.state.storeProducts];
+        let tempItem = tempCart.find(item=>item.id===id);
+        if(!tempItem){
+            tempItem = tempProducts.find(item=>item.id===id);
+            let total = tempItem.price;
+            let cartItem = {
+                ...tempItem,
+                count:1,
+                total,
+            }
+            tempCart=[...tempCart,cartItem];
+
+        }else{
+            tempItem.count++;
+            tempItem.total= tempItem.price * tempItem.count;
+            tempItem.total = parseFloat(tempItem.total.toFixed(2));
+        }
+        this.setState(()=>{
+            return {cart:tempCart}
+        },()=>{
+            this.addTotals();
+            this.syncStorage();
+            // this.openCart();
+        })
     }
 
-    setProduct = (id) => {
-        console.log(`set Product ${id}`);
+    setSingleProduct = (id) => {
+        let product = this.state.storeProducts.find(item=>item.id===id);
+        localStorage.setItem('singleProduct',JSON.stringify(product));
+        this.setState({
+            singleProduct:{...product},
+            loading:false,
+        });
+
     }
     componentDidMount() {
         this.setProducts(items);
+    }
+
+    increment= (id)=>{
+        console.log(id);
+    }
+
+    decrement= (id)=>{
+        console.log(id);
+    }
+
+    removeItem= (id)=>{
+        console.log(id);
+    }
+    clearCart =()=>{
+        console.log("you just clear the cart...");
     }
     render() {
         return (
@@ -89,7 +167,11 @@ class ProductProvider extends Component {
                     closeCart: this.closeCart,
                     openCart: this.openCart,
                     addToCart: this.addToCart,
-                    setProduct: this.setProduct,
+                    setSingleProduct: this.setSingleProduct,
+                    increment:this.increment,
+                    decrement:this.decrement,
+                    removeItem:this.removeItem,
+                    clearCart:this.clearCart,
                 }
             }>
                 {this.props.children}
