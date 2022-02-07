@@ -5,7 +5,6 @@ import CartItem from './CartItem';
 const CartList = () => {
   return( <div className='container-fluid'>
   {/* row */}
-      Cart list.
       <div className="col">
         <ProductConsumer>
           {

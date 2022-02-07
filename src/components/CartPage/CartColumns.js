@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CartColumns = ({children}) => {
+const CartColumns = () => {
   return (
     <div className='container-fluid text-center d-none d-lg-block my-5'>
       <div className="row">
@@ -23,9 +23,6 @@ const CartColumns = ({children}) => {
           <p className="text-uppercase">Total</p>
         </div>
       </div>
-      {
-        children
-      }
     </div>);
 };
 
